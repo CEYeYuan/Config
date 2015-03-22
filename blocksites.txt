@@ -1,5 +1,5 @@
 modify: /etc/hosts 
-if you want to block www.renren.com, you can just add one lien:
+if you want to block www.renren.com, you can just add one line:
 	127.0.0.1 www.renren.com
 Why it works?
 When client want to visit a particular website, the first thing is to send a request to the DNS, and DNS will parse 
