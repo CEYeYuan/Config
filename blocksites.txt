@@ -1,4 +1,9 @@
-/etc/hosts文件中填写下面几行
-如禁止访问人人网：127.0.0.1 www.renren.com
-原理：当主机访问某个网址的时候，首先要向本地域名服务器发出申请，把要访问的域名renren解析成ip地址，而renren的ip地址在本地域名服务器里面是有的，肯定可以解析到，这样就可以正确建连。而/etc/hosts是一个比本地域名服务器优先级更高的地方，当在这里查找到域名对应的ip时候，主机就不再请求本地域名服务器解析了。直接以为renren对应的ip是本机localhost，这样当然无法找到正确都服务器，没法得到renren发来的数据。于是达到禁止访问网站的目的。
+modify: /etc/hosts 
+if you want to block www.renren.com, you can just add one lien:
+	127.0.0.1 www.renren.com
+Why it works?
+When client want to visit a particular website, the first thing is to send a request to the DNS, and DNS will parse 
+the domain into a ip address. However, /etc/hosts takes precedence over the DNS, if the domain can be found it here,
+there is no need to request the DNS. The domain will be parsed into localhost, which definetely is not correct, so 
+we can block that site.
 
