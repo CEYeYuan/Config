@@ -1,0 +1,25 @@
+
+bind-address            = 192.168.1.20
+
+mysql -u root -p  #login the database
+show databases;
+use databaseName;
+create database name;# create a database
+
+#use a .sql file
+Connect to the MySQL Client, and when you have authenticated yourself, and created the database (create database [database name];) then just execute the script with the command:
+
+\. filename.sql
+
+drop database name;
+//
+CREATE TABLE student(
+    -> first_name varchar(30) not null,
+    -> last_name varchar(30) not null,
+    -> email varchar(60) null,
+    -> city varchar(40) not null,
+    -> state char(2) not null default "CA",
+    -> sex ENUM('m','f') not null,
+    -> student_id int unsigned not null auto_increment primary key);
+show tables;
+

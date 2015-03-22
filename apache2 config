@@ -1,0 +1,98 @@
+First refresh your package index...
+
+
+$ sudo apt-get update
+... and then install the LAMP stack:
+
+
+$ sudo apt-get install lamp-server^
+Use a text editor such as "sudo nano" at the command line or "gksudo gedit" on the desktop to create a new file,
+
+$ sudo nano /etc/apache2/conf-available/fqdn.conf
+or
+
+$ gksu "gedit /etc/apache2/conf-available/fqdn.conf"
+then add
+
+ServerName localhost
+to the file, save it, and enable your new configuration file by running the command below.
+
+sudo a2enconf fqdn
+This can all be done in a single command with the following:
+
+$ echo "ServerName localhost" | sudo tee /etc/apache2/conf-available/fqdn.conf && sudo a2enconf fqdn
+
+Virtual Hosts
+
+Apache2 has the concept of sites, which are separate configuration files that Apache2 will read. These are available in /etc/apache2/sites-available. By default, there is one site available called 000-default. This is what you will see when you browse to http://localhost or http://127.0.0.1. You can have many different site configurations available, and activate only those that you need.
+
+As an example, we want the default site to be /home/user/public_html/. To do this, we must create a new site and then enable it in Apache2.
+
+To create a new site:
+
+Copy the default website as a starting point. sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/mysite.conf 
+
+Edit the new configuration file in a text editor "sudo nano" on the command line or "gksudo gedit", for example: gksudo gedit /etc/apache2/sites-available/mysite.conf
+
+Change the DocumentRoot to point to the new location. For example, /home/user/public_html/
+
+Change the Directory directive, replace <Directory /var/www/> to <Directory /home/user/public_html/>
+
+You can also set separate logs for each site. To do this, change the ErrorLog and CustomLog directives. This is optional, but handy if you have many sites
+
+Save the file
+Now, we must deactivate the old site, and activate our new one. Ubuntu provides two small utilities that take care of this: a2ensite (apache2enable site) and a2dissite (apache2disable site).
+
+
+$ sudo a2dissite 000-default && sudo a2ensite mysite
+Finally, we restart Apache2:
+
+
+$ sudo /etc/init.d/apache2 restart
+If you have not created /home/user/public_html/, you will receive an warning message
+
+To test the new site, create a file in /home/user/public_html/:
+
+
+$ echo '<b>Hello! It is working!</b>' > /home/user/public_html/index.html
+Finally, browse to http://localhost/
+
+########################################
+how to set up root directory?
+
+cd /etc/apache2/
+cdsudo nano apache2.conf
+
+
+<Directory /home/yeyuan/public_html/>
+        Options Indexes FollowSymLinks
+        AllowOverride None
+        Require all granted
+</Directory>
+
+
+If your server documents are in /home/$USER/public_html directory you need to run
+
+sudo chown -R www-data:www-data /home/$USER/public_html
+to give ownership of the DocumentRoot folder to the user www-data and group www-data.
+
+Then you can add yourself to the group www-data
+
+sudo adduser $USER www-data
+Finally, you need to make the DocumentRoot folder writable by owner (www-data user) and to your self (as part of the www-data group):
+
+sudo chmod -R 775 /home/$USER/public_html
+For convenience you can make script named public_html_fix.sh with content:
+
+#!/bin/bash
+
+sudo adduser $USER www-data
+sudo chown -R www-data:www-data /home/$USER/public_html
+sudo chmod -R 775 /home/$USER/public_html
+Save it inside /home/$USER/bin and make it executable using:
+
+sudo chmod +x /home/$USER/bin/public_html_fix.sh
+Then you call it whenever you need, from wherever on the file system you happen to find yourself like this:
+
+public_html_fix.sh
+
