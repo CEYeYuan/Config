@@ -1,0 +1,90 @@
+#####You can use the git remote set-url command to match a remote URL with a name
+git remote set-url name  <REMOTE_URL> 
+
+######  Add a remote 
+To add a new remote, use the git remote add command on the terminal, in the directory your repository is stored at.
+
+The git remote add command takes two arguments:
+
+A remote name, for example, origin
+A remote URL, for example, https://github.com/user/repo.git
+
+git remote add origin https://github.com/user/repo.git
+
+###### Renaming a Remote 
+
+The git remote rename command takes two arguments:
+
+An existing remote name, for example, origin
+A new name for the remote, for example, destination
+
+git remote rename origin destination
+
+##### See the details about the remote 
+git remote -v
+
+##### Remove a remote 
+
+The git remote rm command takes one argument:
+
+A remote name, for example, destination
+
+
+#### Interact with remote 
+
+When working with other people's repositories, there are a few basic Git commands 
+to remember:
+
+git clone
+git fetch
+git merge
+git pull
+These commands are very useful when interacting with a remote repository. clone and 
+fetch download remote code from a repository's remote URL to your local computer, 
+merge is used to merge different people's work together with yours, and pull is a 
+combination of fetch and merge.
+
+git clone https://github.com/USERNAME/REPOSITORY.git
+# Clones a repository to your computer
+
+When you run git clone, the following actions occur:
+
+A new folder called repo is made
+It is initialized as a Git repository
+A remote named origin is created, pointing to the URL you cloned from
+All of the repository's files and commits are downloaded there
+The default branch (usually called master) is checked out
+
+Use git fetch to retrieve new work done by other people. Fetching from a repository
+grabs all the new remote-tracking branches and tags without merging those changes into
+ your own branches.
+
+If you already have a local repository with a remote URL set up for the desired project,
+you can grab all the new information by using git fetch *remotename* in the terminal:
+
+git fetch remotename
+# Fetches updates made to a remote repository
+
+git fetch remotename
+# Fetches updates made to a remote repository
+Otherwise, you can always add a new remote and then fetch.
+
+Merging combines your local changes with changes made by others.
+
+Typically, you'd merge a remote-tracking branch (i.e., a branch fetched from a remote 
+repository) with your local branch:
+
+git merge remotename/branchname
+# Merges updates made online with your local work
+
+git pull is a convenient shortcut for completing both git fetch and git merge in the 
+same command:
+
+git pull remotename branchname
+# Grabs online updates and merges them with your local work
+Because pull performs a merge on the retrieved changes, you should ensure that your local
+work is committed before running the pull command. If you run into a merge conflict
+you cannot resolve, or if you decide to quit the merge, you can use git merge --abort 
+to take the branch back to where it was in before you pulled.
+
+
