@@ -1,0 +1,5 @@
+#### how can I use PHP to generate an anchor with variable names and function 
+calls?
+
+	$url=base_url()."$row->Iid";
+	echo "<a href='$url'>$row->Iid</a>";
