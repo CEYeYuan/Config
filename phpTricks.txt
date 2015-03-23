@@ -1,5 +1,16 @@
 #### how can I use PHP to generate an anchor with variable names and function 
 calls?
 
-	$url=base_url()."$row->Iid";
+	$url=base_url()."/project/index/$row->Iid";
 	echo "<a href='$url'>$row->Iid</a>";
+
+#### how can I split data onto differnet urls?
+    1.generate different url(It's always a good idea to pass the PRIMARY
+	   KEY AS the parameter into another controller function)
+	 in this case,$Iid is passed into index function of the project 
+	 controller
+    2.in that particular controller since we already have the primary key,
+      it's easy to do the query and get all the useful data from the 
+      database
+    3.the last step is to create a static webpage with a few dynamic data
+      comes from the second step.
