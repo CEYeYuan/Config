@@ -14,3 +14,17 @@ calls?
       database
     3.the last step is to create a static webpage with a few dynamic data
       comes from the second step.
+
+####### how can I pass query result to a view?
+	use a $data array;
+	$data['result']=$this->model_idea->query_myIdea();
+	$this->load->view("myIdeas_view",$data);
+	Inside that view, we can use a foreach loop:
+	<?php
+		foreach($result->result() as $row){
+			echo "<li style='font-size:20px'>";
+			$url=base_url()."index.php/Ideas/index/$row->Iid";
+			echo "<a href='$url'>$row->title</a></br>"."Poineer Time:$row->dateOfInit";
+			echo "</li>";
+		}
+	?>
