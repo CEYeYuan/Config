@@ -28,3 +28,14 @@ calls?
 			echo "</li>";
 		}
 	?>
+
+
+##### how can I pass a group of checkbox status into database query?
+		pass them one by one.
+		have an initial sql query, then check if a particular checkbox is checked or not,
+		then modify the query.
+
+		$sql="select * from Idea where 1>0";
+		if ($this->input->post('finance')==false){
+			$sql=$sql."and Iid not in (select Iid from Idea where market='finance')";
+		}
