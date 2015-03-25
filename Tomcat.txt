@@ -1,0 +1,94 @@
+How To Install Apache Tomcat 7 on Ubuntu 14.04 via Apt-Get
+About Apache Tomcat
+Apache Tomcat is an application server that is used to serve Java applications to the web. Tomcat is an open source implementation of the Java Servlet and JavaServer Pages technologies, released by the Apache Software Foundation.
+
+This tutorial covers the basic installation and some configuration of Tomcat 7.0.x, the latest stable version at the time of writing, on your Ubuntu 14.04 VPS.
+
+There are two basic ways to install Tomcat on Ubuntu:
+
+Install through apt-get. This is the simplest method.
+
+Download the binary distribution from the Apache Tomcat site. This guide does not cover this method; refer to Apache Tomcat Documentation for instructions.
+
+For this tutorial, we will use the simplest method: apt-get. Please note that this will install the latest release of Tomcat that is in the official Ubuntu repositories, which may or may not be the latest release of Tomcat. If you want to guarantee that you are installing the latest version of Tomcat, you can always download the latest binary distribtion.
+
+Step One — Prerequisites
+Before you begin with this guide, you should have a separate, non-root user account set up on your server. You can learn how to do this by completing steps 1-4 in the initial server setup for Ubuntu 14.04. We will be using the demo user created here for the rest of this tutorial.
+
+Step Two - Install Tomcat
+The first thing you will want to do is update your apt-get package lists:
+
+sudo apt-get update
+Now you are ready to install Tomcat. Run the following command to start the installation:
+
+sudo apt-get install tomcat7
+Answer yes at the prompt to install tomcat. This will install Tomcat and its dependencies, such as Java, and it will also create the tomcat7 user. It also starts Tomcat with its default settings.
+
+Tomcat is not completely set up yet, but you can access the default splash page by going to your domain or IP address followed by :8080 in a web browser:
+
+http://your_ip_address:8080
+You will see a splash page that says "It works!", in addition to other information. Now we will go deeper into the installation of Tomcat.
+
+Step Three - Installing Additional Packages
+Note: This section is not necessary if you are already familiar with Tomcat and you do not need to use the web management interface, documentation, or examples. If you are just getting into Tomcat for the first time, please continue.
+
+With the following command, we will install the Tomcat online documentation, the web interface (manager webapp), and a few example webapps:
+
+sudo apt-get install tomcat7-docs tomcat7-admin tomcat7-examples
+Answer yes at the prompt to install these packages. We will get into the usage and configuration of these tools in a later section. Next, we will install the Java Development Kit.
+
+Step Four - Install Java Development Kit (Optional)
+If you are planning on developing apps on this server, you will want to be sure to install the software in this section.
+
+The Java Development Kit (JDK) enables us to develop Java applications to run in our Tomcat server. Running the following command will install openjdk-7-jdk:
+
+sudo apt-get install default-jdk
+In addition to JDK, the Tomcat documentation suggests also installing Apache Ant, which is used to build Java applications, and a source control system, such as git. Let's install both of those with the following command:
+
+sudo apt-get install ant git
+For more information about Apache Ant, refer to the official manual. For a tutorial on using git, refer to DigitalCloud's Git Tutorial.
+
+Step 5 - Configure Tomcat Web Management Interface
+In order to use the manager webapp installed in Step 3, we must add a login to our Tomcat server. We will do this by editing the tomcat-users.xml file:
+
+sudo nano /etc/tomcat7/tomcat-users.xml
+This file is filled with comments which describe how to configure the file. You may want to delete all the comments between the following two lines, or you may leave them if you want to reference the examples:
+
+<tomcat-users>
+</tomcat-users>
+You will want to add a user who can access the manager-gui and admin-gui (the management interface that we installed in Step Three). You can do so by defining a user similar to the example below. Be sure to change the password and username if you wish:
+
+<tomcat-users>
+    <user username="admin" password="password" roles="manager-gui,admin-gui"/>
+</tomcat-users>
+Save and quit the tomcat-users.xml file. To put our changes into effect, restart the Tomcat service:
+
+sudo service tomcat7 restart
+Step 6 - Access the Web Interface
+Now that we've configured an admin user, let's access the web management interface in a web browser:
+
+http://your_ip_address:8080
+You will see something like the following image:
+
+Tomcat Splashscreen
+
+As you can see, there are four links to packages you installed in Step Three:
+
+tomcat7-docs: Online documentation for Tomcat. Accessible via http://your_ip_address:8080/docs/
+tomcat7-examples: Tomcat 7 Servlet and JSP examples. You can click through the example webapps to get a basic idea of how they work (and also look at the source code to see how they were implemented). Accessible via http://your_ip_address:8080/examples/
+tomcat7-admin (manager-webapp): Tomcat Web Application Manager. This will allow you to manage and your Java applications.
+tomcat7-admin (host-manager): Tomcat Virtual Host Manager.
+Let's take a look at the Web Application Manager, accessible via the link or http://your_ip_address:8080/manager/html:
+
+Tomcat Web Application Manager
+
+The Web Application Manager is used to manage your Java applications. You can Start, Stop, Reload, Deploy, and Undeploy here. You can also run some diagnostics on your apps (i.e. find memory leaks). Lastly, information about your server is available at the very bottom of this page.
+
+Now let's take a look at the Virtual Host Manager, accessible via the link or http://your_ip_address:8080/host-manager/html/:
+
+Tomcat Virtual Host Manager
+
+From the Virtual Host Manager page, you can add virtual hosts to serve your applications in.
+
+
+https://www.digitalocean.com/community/tutorials/how-to-install-apache-tomcat-7-on-ubuntu-14-04-via-apt-get
