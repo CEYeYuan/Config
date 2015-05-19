@@ -1,0 +1,4 @@
+### how do I solve if No desktop icons/terminal is blank(transparent) after reboot
+
+I got the solution! I found out that some of packages provided by ppa/xorg-edgers weren`t updated and were hold with the previous version.
+So I did sudo apt-get install --reinstall libegl1-mesa and it reinstalled for me these packages and everything started working normally. I hope it will help you.

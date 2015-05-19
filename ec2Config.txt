@@ -1,0 +1,13 @@
+chmod 400 Ye.pem 
+#change it to be only readable
+ssh -i Ye.pem ec2-user@52.5.151.207
+#if this is an ec2 instance
+ssh -i 309.pem ubuntu@52.0.129.137
+#if this is an ubuntu instance;preferred 
+#then config the apache server
+Public DNS
+ec2-52-6-31-213.compute-1.amazonaws.com
+#this is the $url that all user can get access
+#### how to copy local code to the server?
+sudo scp -r  -i 309.pem startup/   ubuntu@52.0.129.137:/home/ubuntu/public_html
+#scp means ssh copy
