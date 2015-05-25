@@ -11,3 +11,4 @@ ec2-52-6-31-213.compute-1.amazonaws.com
 #### how to copy local code to the server?
 sudo scp -r  -i 309.pem startup/   ubuntu@52.0.129.137:/home/ubuntu/public_html
 #scp means ssh copy
+http://ec2-52-0-129-137.compute-1.amazonaws.com/oprahDatabase/
